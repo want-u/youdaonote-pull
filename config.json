@@ -1,8 +1,9 @@
 {
-    "username": "",
-    "password": "",
-    "local_dir": "",
-    "ydnote_dir": "",
-    "smms_secret_token": ""
+  "username": "",
+  "password": "",
+  "local_dir": "",
+  "ydnote_dir": [],
+  "smms_secret_token": "",
+  "local_md": ""
 }
 
