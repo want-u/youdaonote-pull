@@ -39,7 +39,6 @@ def check_config(config_name) -> dict:
         config_dict['password']
         config_dict['local_dir']
         config_dict['ydnote_dir']
-        config_dict['smms_secret_token']
     except KeyError:
         raise KeyError('请检查「config.json」的 key 是否分别为 username, password, local_dir, ydnote_dir, smms_secret_token')
 
