@@ -2,13 +2,10 @@
 
 <!--Becauce basically only Chinese users use "Youdao Note", so this project only provides Chinese README.md-->
 
-现在有道云笔记不能导出笔记，迁移笔记很麻烦。此脚本可将所有笔记下载到本地。
-
 ## 功能 <!--Feature-->
 
-- 可将所有笔记（文件）按原格式下载到本地
-- 由于「笔记」类型文件下载后默认为 Xml 格式，不是正常笔记内容，**默认将其转换为 Markdown 格式**
-- 由于有道云笔记图床图片不能在有道云笔记外显示，**默认将其下载到本地，或指定上传到 [SM.MS](https://sm.ms)**
+- 仅针对有道云笔记中的md文件
+- 将有道云本地的md文件，按照笔记目录结构备份一份新的文件夹，方便同步上传github等
 
 ## 使用步骤 <!--用法 Usage-->
 
@@ -47,12 +44,10 @@ python --version   # Windows
 # macOS
 sudo easy_install pip3      # 安装 Python3 Package Installer
 sudo pip3 install requests     #  安装 requests
-sudo pip3 install markdownify  #  安装 markdownify，用于 html 转化为 md
 ```
 ```shell
 # Windows
 pip install requests  
-pip install markdownify
 
 # 有问题可参考 https://www.liaoxuefeng.com/wiki/1016959663602400/1017493741106496
 ```
@@ -63,16 +58,16 @@ pip install markdownify
     "username": "your_youdaonote_username",
     "password": "your_youdaonote_password",
     "local_dir": "",
-    "ydnote_dir": "",
-    "smms_secret_token": ""
+    "ydnote_dir": [],
+    "local_md": ""
 }
 ```
 
 * username：**必填**，你的有道云笔记用户名
 * password：**必填**，你的有道云笔记密码
 * local_dir：选填，本地存放导出文件的文件夹，不填则默认为当前文件夹
-* ydnote_dir：选填，有道云笔记指定导出文件夹名，不填则导出所有文件
-* smms_secret_token：选填， [SM.MS](https://sm.ms) 的 Secret Token（注册后 -> Dashboard -> API Token），用于上传笔记中有道云图床图片到 SM.MS 图床，不填则只下载到本地（youdaonote-images 文件夹），Markdown 中使用本地链接
+* ydnote_dir：选填，列表格式，有道云笔记指定导出文件夹名，不填则导出所有文件，如：  "ydnote_dir": ["XiaoMi", "Github"]
+* local_md：,有道云本地保存文件夹，如：  "local_md": "D:\\有道云\\luoxian1011@163.com"
 * 提示：脚本单纯本地运行，不用担心你的账号密码泄露；建议使用 [Sublime](https://www.sublimetext.com/3) 编辑 config.json（避免编码格式错误）
 
 示例：
@@ -85,7 +80,7 @@ pip install markdownify
     "password": "12345678",
     "local_dir": "/Users/yanjie/Documents/youdaonote-pull/test",
     "ydnote_dir": "",
-    "smms_secret_token": "SGSLk9yWdTe4RenXYqEPWkqVrx0Yexample"
+    "local_md": "D:\\有道云\\luoxian1011@163.com"
 }
 ```
 
@@ -97,7 +92,7 @@ pip install markdownify
     "password": "12345678",
     "local_dir": "D:/Documents/youdaonote-pull/test",
     "ydnote_dir": "",
-    "smms_secret_token": "SGSLk9yWdTe4RenXYqEPWkqVrx0Yexample"
+    "local_md": "D:\\有道云\\luoxian1011@163.com"
 }
 ```
 
