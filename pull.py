@@ -40,7 +40,7 @@ def check_config(config_name) -> dict:
         config_dict['local_dir']
         config_dict['ydnote_dir']
     except KeyError:
-        raise KeyError('请检查「config.json」的 key 是否分别为 username, password, local_dir, ydnote_dir, smms_secret_token')
+        raise KeyError('请检查「config.json」的 key 是否分别为 username, password, local_dir, ydnote_dir')
 
     if config_dict['username'] == '' or config_dict['password'] == '':
         raise ValueError('账号密码不能为空，请检查「config.json」！')
@@ -98,7 +98,6 @@ class YoudaoNoteSession(requests.Session):
         # 属于对象变量
         self.cstk = None
         self.local_dir = None
-        self.smms_secret_token = None
 
     def check_and_login(self, username, password) -> str:
         try:
@@ -219,7 +218,7 @@ class YoudaoNoteSession(requests.Session):
             # raise LoginError('请检查账号密码是否正确！也可能因操作频繁导致需要验证码，请切换网络（改变 ip）或等待一段时间后重试！接口返回内容：',
             #                  json.dumps(parsed, indent=4, sort_keys=True))
 
-    def get_all(self, local_dir, ydnote_dir, smms_secret_token, root_id) -> None:
+    def get_all(self, local_dir, ydnote_dir, root_id) -> None:
         """ 下载所有文件 """
 
         # 如果本地为指定文件夹，下载到当前路径的 youdaonote 文件夹中，如果是 Windows 系统，将路径分隔符（\\）替换为 /
@@ -241,7 +240,6 @@ class YoudaoNoteSession(requests.Session):
                 raise ValueError('此文件夹「%s」不是顶层文件夹，暂不能下载！' % ydnote_dir)
 
         self.local_dir = local_dir  # 此处设置，后面会用，避免传参
-        self.smms_secret_token = smms_secret_token  # 此处设置，后面会用，避免传参
         self.get_file_recursively(root_id, local_dir, ydnote_dir)
 
     def get_dir_id(self, root_id, ydnote_dir) -> str:
@@ -323,7 +321,7 @@ def main():
         print('正在 pull，请稍后 ...')
         for each in config_dict['ydnote_dir']:
             print(each)
-            session.get_all(config_dict['local_dir'], each, config_dict['smms_secret_token'], root_id)
+            session.get_all(config_dict['local_dir'], each, root_id)
 
     except requests.exceptions.ProxyError as proxyErr:
         print('请检查网络代理设置；也有可能是调用有道云笔记接口次数达到限制，请等待一段时间后重新运行脚本，若一直失败，可删除「cookies.json」后重试')
